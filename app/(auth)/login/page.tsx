@@ -15,7 +15,7 @@ const Login = () => {
         />
       </div>
 
-      <div className='md:col-span-1 flex items-center justify-center flex-col gap-y-5'>
+      <div className='md:col-span-1 flex items-center justify-center flex-col gap-y-5 px-3'>
         <h2 className='md:text-5xl text-3xl font-extrabold'>INSTADS</h2>
         <LoginForm />
       </div>

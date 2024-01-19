@@ -52,7 +52,7 @@ export const MoreDropdown = () => {
         onClick={() => setOpen(prev => !prev)} 
         variant={'ghost'}
         size={'lg'}
-        className={cn("navLink hover:!bg-neutral-300 dark:hover:!bg-neutral-800 w-full !outline-none")}
+        className={cn("navLink hover:!bg-neutral-300 dark:hover:!bg-neutral-900 w-full !outline-none")}
         >   
             <i className={`fas fa-bars text-xl`}></i>
             <p className={`${cn("hidden lg:block text-[17px] capitalize")}`}>More</p>

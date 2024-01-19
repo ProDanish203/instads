@@ -5,6 +5,7 @@ import { Button } from "../ui/button"
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 
 interface UserData {
@@ -29,6 +30,7 @@ export const LoginForm = () => {
 
     const handleLogin = async (e:FormEvent) => {
         e.preventDefault();
+        if(!userData.username || !userData.password) return toast.error("Please provide credentials");
         try{
             setLoading(true);
             const {username, password} = userData
@@ -39,7 +41,8 @@ export const LoginForm = () => {
                 if(ok){
                 router.push('/')
                 }else{
-                  console.log(error);
+                    toast.error(error);
+                    console.log(error);
                 }
             });
         }catch(error){
@@ -52,7 +55,7 @@ export const LoginForm = () => {
   return (
     <div className="max-w-[400px] w-full">
         <form onSubmit={handleLogin}
-        className="rounded-md w-full dark:bg-neutral-800 bg-neutral-300 p-5 flex flex-col items-center gap-4"
+        className="rounded-md w-full dark:bg-neutral-800 bg-neutral-200 sm:px-5 py-5 px-3 flex flex-col items-center gap-4"
         >
             <h2 className="text-center text-4xl font-bold mb-2">Login</h2>
             <div className="grid w-full max-w-sm mx-auto items-center gap-1.5">
@@ -65,9 +68,9 @@ export const LoginForm = () => {
                 <Input type="password" id="password" placeholder="Password" name="password" value={userData.password} onChange={handleChange} autoComplete="off" className="!outline-none w-full dark:!bg-neutral-900" />
             </div>
 
-            <div className="grid w-full max-w-sm mx-auto items-center gap-1.5">
-                <Button variant={"ghost"} size={"lg"}
-                className="dark:!bg-neutral-900 dark:hover:!bg-neutral-950 !bg-neutral-400 hover:!bg-neutral-500 font-semibold text-lg !cursor-pointer"
+            <div className="grid w-full max-w-sm mt-2 mx-auto items-center gap-1.5">
+                <Button variant={"ghost"} size={"default"}
+                className="dark:!bg-neutral-900 dark:hover:!bg-neutral-950 !bg-neutral-300 hover:!bg-neutral-400 font-semibold text-lg !cursor-pointer"
                 type="submit"
                 disabled={loading}
                 >
@@ -75,7 +78,7 @@ export const LoginForm = () => {
                 </Button>
             </div>
 
-            <p className='capitalize'>Don't have an account?  
+            <p className='capitalize text-sm self-start'>Don't have an account?  
             <Link href="/signup" className='underline cursor-pointer font-bold'> Signup</Link>
             </p>
         </form>

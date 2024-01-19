@@ -3,6 +3,7 @@ import '../globals.css'
 import { Theme } from "@/store/Theme";
 import { getAuthSession } from '@/utils/auth';
 import { redirect } from 'next/navigation';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'InstaDS | Your social gallery',
@@ -24,7 +25,10 @@ export default async function RootLayout({
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
       <body className='min-h-screen'>
-
+        <Toaster
+        position="top-right"
+        reverseOrder={true}
+        />
         <Theme>
 
           <main>
