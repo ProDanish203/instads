@@ -5,6 +5,7 @@ import { Theme } from "@/store/Theme";
 import { redirect } from 'next/navigation';
 import { getAuthSession } from '@/utils/auth';
 import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from '@/utils/AuthProvider';
 
 export const metadata: Metadata = {
   title: 'InstaDS | Your social gallery',
@@ -19,19 +20,21 @@ export default async function RootLayout({
 
   const session = await getAuthSession();
   if(!session?.user) redirect("/login");
-
+  
   return (
     <html lang="en">
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
       <body>
-
+      
         <Theme>
         <Toaster
         position="top-right"
         reverseOrder={true}
         />
+
+        <AuthProvider>
 
         <main className='min-h-screen w-screen'>
 
@@ -53,6 +56,7 @@ export default async function RootLayout({
           </div>
         </main>
         
+        </AuthProvider>
         </Theme>
         
       </body>

@@ -27,8 +27,26 @@ export const authOptions = {
 
             return user;
         }
+
     })
     ],
+    callbacks: {
+        async session({ session }){
+            try{
+              await connectDb();
+              const user = await User.findOne({ email: session.user.email });
+      
+              session.user.id = user._id;
+              session.user.username = user.username;
+      
+              return session;
+      
+            }catch(error){
+              console.log(error);
+              return;
+            }
+        },
+    },
     debug: process.env.NODE_ENV === "development",
     session:{
         strategy: 'jwt'

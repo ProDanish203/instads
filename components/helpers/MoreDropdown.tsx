@@ -104,7 +104,7 @@ export const MoreDropdown = () => {
                         ></i>
                         <p className="text-md">Switch Appearance</p>
                     </div>
-                    <i className="fas fa-moon"></i>
+                    <i className={`fas ${theme == "dark" ? "fa-moon": "fa-sun"}`}></i>
                 </div>
                 
             </DropdownMenuLabel>
