@@ -38,13 +38,13 @@ export const NavLinks = () => {
     const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col gap-3 max-md:hidden">
+    <nav className="flex flex-col gap-3 max-sm:hidden">
     {links.map((link, i:number) => {
         const isActive = pathname.includes(link.path);
         return <Link href={link.path} key={i} 
         className={buttonVariants({
             variant: isActive ? "secondary" :"ghost"  ,
-            className: cn("navLink", {"hidden md:flex": link.hideOnMobile, "dark:bg-neutral-900 bg-neutral-300": isActive}),
+            className: cn("navLink", {"dark:bg-neutral-900 bg-neutral-300": isActive}),
             size: "lg"
         })}
         >   

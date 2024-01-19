@@ -1,7 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
+html{
+  overflow-x: hidden;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -107,10 +111,6 @@
     -webkit-backdrop-filter: blur(8.1px);
     border: 1px solid rgba(255, 255, 255, 0.31);
   }
-}
-
-.main-container::-webkit-scrollbar{
-  display: none;
 }
 
 
