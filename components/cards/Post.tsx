@@ -4,6 +4,7 @@ import { extractInitials } from '@/utils/helpers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AddComment } from '../forms'
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 
 export const Post = ({data}: any) => {
     
@@ -36,10 +37,11 @@ export const Post = ({data}: any) => {
                 <i className='fas fa-ellipsis cursor-pointer text-lg'></i>
             </div>
         </div>
-
-        <Image src={media} alt={caption || username || ""} width={400} height={500}
-        className='w-full h-[550px] rounded-sm mt-1'
-        />
+        {/* <AspectRatio ratio={16 / 9}> */}
+            <Image src={media} alt={caption || username || ""} width={1400} height={1500}
+            className='w-full h-[550px] object-cover rounded-sm mt-1'
+            />
+        {/* </AspectRatio> */}
 
         <div className='flex flex-col gap-1'>
 

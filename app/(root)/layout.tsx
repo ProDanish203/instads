@@ -36,7 +36,7 @@ export default async function RootLayout({
         <main className='min-h-screen w-screen'>
 
           <div className='flex'>
-            <div className='max-sm:hidden sm:border-r'>
+            <div className='max-sm:hidden sm:border-r border-r-neutral-300 dark:border-r-neutral-800'>
               <Sidebar/>
             </div>
 
