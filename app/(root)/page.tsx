@@ -1,8 +1,11 @@
 import { Post } from "@/components/cards";
 import { Header } from "@/components/shared";
+import { getPosts } from "@/lib/actions/Post";
 import { Suspense } from "react";
 
-export default function Home() {
+export default async function Home() {
+
+  const {posts} = await getPosts();
 
   return (
     <div className="flex w-full flex-grow">
@@ -10,10 +13,11 @@ export default function Home() {
 
       <div className="flex flex-col flex-1 gap-y-8 max-w-lg mx-auto pb-20">
         <Suspense fallback="loading...">
-          <Post/>
-          <Post/>
-          <Post/>
-          <Post/>
+          {posts && posts.length > 0 && 
+          posts.map((post) => (
+            <Post data={post} key={post.id}/>
+          ))
+          }
         </Suspense>
       </div>
     </div>

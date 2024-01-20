@@ -29,7 +29,7 @@ export default async function RootLayout({
       <body className='dark:bg-neutral-950'>
       
         <Theme>
-        <Toaster position="top-right"/>
+        <Toaster position="top-right" richColors/>
 
         <AuthProvider>
 

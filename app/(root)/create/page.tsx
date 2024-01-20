@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
 import useMount from "@/hooks/useMount";
+import { createPost } from "@/lib/actions/Post";
 import { UploadButton } from "@/utils/uploadthing";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -29,7 +30,16 @@ const CreatePage = () => {
 
   const handleSubmit = async () => {
     if(!fileUrl) return toast.error("Media is required");
-
+    
+    const {success, message} = await createPost({
+      caption, fileUrl
+    });
+    if(success){
+      toast.success(message);
+      router.back();
+    }else{
+      toast.error(message);
+    }
   }
 
   if(!mount) return null;
@@ -59,7 +69,7 @@ const CreatePage = () => {
             ): (
             <>
               <UploadButton
-                className="!outline-none w-32 h-32 rounded-md border-2 border-dotted border-neutral-500 flex justify-center items-center my-2 z-50 mx-auto hover:bg-neutral-300 dark:hover:bg-neutral-800 transition-all cursor-pointer"
+                className="my-3"
                 endpoint="imageUploader"
                 onClientUploadComplete={(res) => {
                   setFileUrl(res[0].url);

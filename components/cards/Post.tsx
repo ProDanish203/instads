@@ -4,33 +4,26 @@ import { extractInitials } from '@/utils/helpers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AddComment } from '../forms'
-import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { formatDistanceToNowStrict } from 'date-fns'
 
 export const Post = ({data}: any) => {
-    
-    const info = {
-        caption: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur, a.",
-        media: "/login-img.jpg",
-        username: "theonlyadmin",
-        userImage: "/dummy-user.png",
-        likesCount: 115,
-        commentsCount: 12
-    }
-    const {caption, media, username, userImage, likesCount, commentsCount} = info
+
+    const {id, image, author, caption, likes, likedBy, comments, createdAt} = data;
+    const formattedDate = formatDistanceToNowStrict(new Date(createdAt));
   return (
     <div className='flex flex-col gap-2 realtive'>
         {/* Post  Header */}
         <div className='flex items-center justify-between px-2'>
             <div className='flex items-center gap-2'>
-                <Link href={`/user/`}>
+                <Link href={`/user/${author.id}`}>
                     <Avatar className='h-8 w-8'>
-                        <AvatarImage src={userImage ? userImage: '/dummy-user.png'} alt={username || ""}/>
+                        <AvatarImage src={author.image ? author.image: '/dummy-user.png'} alt={author.username || ""} className='rounded-md'/>
                         {/* @ts-ignore */}
-                        <AvatarFallback>{extractInitials(username)}</AvatarFallback>
+                        <AvatarFallback>{extractInitials(author.username)}</AvatarFallback>
                     </Avatar>
                 </Link>
-                <Link href={`/user/`} className='text-sm font-semibold'>theonlyadmin</Link>
-                <p className='text-sm text-neutral-400'>.4d ago</p>
+                <Link href={`/user/${author.id}`} className='text-sm font-semibold'>{author.username}</Link>
+                <p className='text-sm text-neutral-400'>{formattedDate} ago</p>
             </div>
 
             <div>
@@ -38,7 +31,7 @@ export const Post = ({data}: any) => {
             </div>
         </div>
         {/* <AspectRatio ratio={16 / 9}> */}
-            <Image src={media} alt={caption || username || ""} width={1400} height={1500}
+            <Image src={image} alt={caption.slice(0,50) || author.username || ""} width={1400} height={1500}
             className='w-full h-[550px] object-cover rounded-sm mt-1'
             />
         {/* </AspectRatio> */}
@@ -57,9 +50,9 @@ export const Post = ({data}: any) => {
                 </div>
             </div>
 
-            <p className=''>{likesCount} likes</p>
+            <p className=''>{likes} likes</p>
             <p className='text-sm'>
-                <Link href={`/user`} className='font-semibold'>theonlyadmin</Link>&nbsp;
+                <Link href={`/user/${author.username}`} className='font-semibold'>{author.username}</Link>&nbsp;
                 <span>{caption.length < 150 ? caption : (
                     <>
                     {caption.slice(0, 150)}
@@ -67,7 +60,7 @@ export const Post = ({data}: any) => {
                     </>
                 )} </span>
             </p>
-            {commentsCount > 3 && <p className='text-sm dark:text-neutral-400 text-neutral-600'>View all {commentsCount} comments</p>}
+            {comments.length > 3 && <p className='text-sm dark:text-neutral-400 text-neutral-600'>View all {comments} comments</p>}
             
             <AddComment/>
         </div>

@@ -41,7 +41,7 @@ export const registerUser = async ({email,name, password, username}: RegisterPro
         })
 
         if(user){
-            return {user, success: true, message: "Registeration success"}
+            return {success: true, message: "Registeration success"}
         }else{
             return {success: false, message: "Failed to register user"}
         }
