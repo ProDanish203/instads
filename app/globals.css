@@ -91,7 +91,7 @@ html{
   }
 }
 
-@responsive {
+@layer utilities {
   .glassmorphism {
     backdrop-filter: blur(20px) saturate(290%);
     -webkit-backdrop-filter: blur(20px) saturate(290%);

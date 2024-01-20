@@ -4,8 +4,8 @@ import { BottomBar, Sidebar } from '@/components/shared'
 import { Theme } from "@/store/Theme";
 import { redirect } from 'next/navigation';
 import { getAuthSession } from '@/utils/auth';
-import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from '@/utils/AuthProvider';
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: 'InstaDS | Your social gallery',
@@ -22,17 +22,14 @@ export default async function RootLayout({
   if(!session?.user) redirect("/login");
   
   return (
-    <html lang="en">
+    <html lang="en" className='dark'>
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
       </head>
-      <body>
+      <body className='dark:bg-neutral-950'>
       
         <Theme>
-        <Toaster
-        position="top-right"
-        reverseOrder={true}
-        />
+        <Toaster position="top-right"/>
 
         <AuthProvider>
 
@@ -43,8 +40,8 @@ export default async function RootLayout({
               <Sidebar/>
             </div>
 
-            <div className='relative min-h-screen max-w-5xl w-full mx-auto'>
-              <div className='md:px-10 py-4 px-3'>
+            <div className='relative min-h-screen max-w-6xl w-full mx-auto'>
+              <div className='relative md:px-10 max-w-3xl w-full max-sm:py-20 py-3 px-3'>
                 {children}
               </div>
             </div>

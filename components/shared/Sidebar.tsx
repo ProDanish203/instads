@@ -1,7 +1,10 @@
-import { Logo, MoreDropdown, NavLinks } from "../helpers"
-import { BottomBar } from "./Bottombar"
+import { getAuthSession } from "@/utils/auth"
+import { Logo, MoreDropdown, NavLinks, ProfileLink } from "../helpers"
 
-export const Sidebar = () => {
+export const Sidebar = async () => {
+
+  const session = await getAuthSession();
+  const user = session?.user;
   return (
     <div className="h-screen lg:min-w-[300px] max-w-[350px] w-fit lg:w-full sticky top-0 left-0 flex flex-col justify-between items-start z-50 py-5 px-2">
 
@@ -11,8 +14,8 @@ export const Sidebar = () => {
         <div className="max-lg:hidden">
           <Logo/>
         </div>
-        <NavLinks/>
-        {/* Profile link */}
+        <NavLinks/>        
+        {user && <ProfileLink user={user}/>}
 
       </div>
 

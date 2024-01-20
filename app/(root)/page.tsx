@@ -1,14 +1,21 @@
-"use client"
-import { useSession } from "next-auth/react"
+import { Post } from "@/components/cards";
+import { Header } from "@/components/shared";
+import { Suspense } from "react";
 
 export default function Home() {
 
-  const {data: session, status} = useSession();
-  console.log(session)
-
   return (
-    <>
-    <h1 className="text-5xl">Lorem ipsum dolor </h1>
-    </>
-  )
+    <div className="flex w-full flex-grow">
+      <Header title="Home" />
+
+      <div className="flex flex-col flex-1 gap-y-8 max-w-lg mx-auto pb-20">
+        <Suspense fallback="loading...">
+          <Post/>
+          <Post/>
+          <Post/>
+          <Post/>
+        </Suspense>
+      </div>
+    </div>
+  );
 }
