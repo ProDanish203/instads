@@ -28,17 +28,23 @@ const CreatePage = () => {
   const [uploaded, setUploaded] = useState(false)
   const [caption, setCaption] = useState("")
 
+  const [loading, setLoading] = useState(false)
+
   const handleSubmit = async () => {
+    setLoading(true);
     if(!fileUrl) return toast.error("Media is required");
     
     const {success, message} = await createPost({
       caption, fileUrl
     });
+    
     if(success){
       toast.success(message);
+      setLoading(false)
       router.back();
     }else{
       toast.error(message);
+      setLoading(false);
     }
   }
 
@@ -86,7 +92,7 @@ const CreatePage = () => {
             )}
             
 
-            <Button onClick={handleSubmit} variant={"destructive"} disabled={!uploaded} size={"sm"} className="bg-sky-600 hover:bg-sky-700 text-md mt-3 max-sm:mx-0">Create Post</Button>
+            <Button onClick={handleSubmit} variant={"destructive"} disabled={!uploaded || loading} size={"sm"} className="bg-sky-600 hover:bg-sky-700 text-md mt-3 max-sm:mx-0">Create Post</Button>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

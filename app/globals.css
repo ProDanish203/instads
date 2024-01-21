@@ -89,6 +89,9 @@ html{
   .menuLink-container{
     @apply dark:hover:!bg-[#2b2a2a] hover:!bg-neutral-300 !cursor-pointer
   }
+  .optionsBtn{
+    @apply py-3 border-b-2 dark:border-b-neutral-700 border-b-neutral-300 w-full text-center font-semibold text-[16px] dark:hover:bg-neutral-900 hover:bg-neutral-300 transition-all
+  }
 }
 
 @layer utilities {

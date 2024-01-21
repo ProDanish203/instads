@@ -1,46 +1,46 @@
 import React from 'react'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import { extractInitials } from '@/utils/helpers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { AddComment } from '../forms'
 import { formatDistanceToNowStrict } from 'date-fns'
+import { PostOptions } from '../helpers'
+import { getAuthSession } from '@/utils/auth'
+import { LikeBtn } from '../helpers/LikeBtn'
 
-export const Post = ({data}: any) => {
+export const Post = async ({data}: any) => {
 
-    const {id, image, author, caption, likes, likedBy, comments, createdAt} = data;
+    const {id, image, author, caption, likes, comments, createdAt} = data;
     const formattedDate = formatDistanceToNowStrict(new Date(createdAt));
+
+    const session = await getAuthSession();
+    const user = session?.user;
+
   return (
     <div className='flex flex-col gap-2 realtive'>
         {/* Post  Header */}
         <div className='flex items-center justify-between px-2'>
             <div className='flex items-center gap-2'>
                 <Link href={`/user/${author.id}`}>
-                    <Avatar className='h-8 w-8'>
-                        <AvatarImage src={author.image ? author.image: '/dummy-user.png'} alt={author.username || ""} className='rounded-md'/>
-                        {/* @ts-ignore */}
-                        <AvatarFallback>{extractInitials(author.username)}</AvatarFallback>
-                    </Avatar>
+                    <Image src={author.image ? author.image: '/dummy-user.png'} alt={author.username} width={50} height={50} 
+                    className='w-8 h-8 rounded-full'
+                    />
                 </Link>
                 <Link href={`/user/${author.id}`} className='text-sm font-semibold'>{author.username}</Link>
                 <p className='text-sm text-neutral-400'>{formattedDate} ago</p>
             </div>
-
-            <div>
-                <i className='fas fa-ellipsis cursor-pointer text-lg'></i>
-            </div>
+            {user && <PostOptions post={data} userId={user.id}/>}
         </div>
-        {/* <AspectRatio ratio={16 / 9}> */}
-            <Image src={image} alt={caption.slice(0,50) || author.username || ""} width={1400} height={1500}
-            className='w-full h-[550px] object-cover rounded-sm mt-1'
-            />
-        {/* </AspectRatio> */}
 
+        <Image src={image} alt={caption.slice(0,50) || author.username || ""} width={1400} height={1500}
+        className='w-full h-[550px] object-cover rounded-sm mt-1'
+        />
+
+        {/* Post Actions */}
         <div className='flex flex-col gap-1'>
 
             <div className='flex items-center justify-between w-full text-lg'>
                 <div className='flex items-center gap-2'>
-                    <i className='far fa-heart cursor-pointer'></i>
+                    <LikeBtn postId={id} likes={likes}/>
                     <i className='far fa-comment cursor-pointer'></i>
                     <i className='far fa-paper-plane cursor-pointer'></i>
                 </div>
@@ -50,7 +50,7 @@ export const Post = ({data}: any) => {
                 </div>
             </div>
 
-            <p className=''>{likes} likes</p>
+            <p className=''>{likes.length} likes</p>
             <p className='text-sm'>
                 <Link href={`/user/${author.username}`} className='font-semibold'>{author.username}</Link>&nbsp;
                 <span>{caption.length < 150 ? caption : (

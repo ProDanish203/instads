@@ -15,7 +15,7 @@ export const Header = ({back, title}: Props) => {
         <h2 className='text-lg font-bold'>{title}</h2>
       </div>
 
-      <div className='flex items-center gap-2 py-2 px-2 rounded-lg dark:bg-neutral-900'>
+      <div className='flex items-center gap-2 py-2 px-2 rounded-lg dark:bg-neutral-900 bg-neutral-200 shadow-md'>
         <i className='fas fa-magnifying-glass text-sm'></i>
         <input type="search" placeholder='Search' 
         className='placeholder:text-neutral-500 text-md outline-none border-none bg-transparent'
