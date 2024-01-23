@@ -22,7 +22,7 @@ export const DeletePostBtn = ({postId}: {postId: string}) => {
 
     const performDeletion = async () => {
         setLoading(true);
-        const {success, message} = await deletePost(postId, pathname);
+        const {success, message} = await deletePost({postId, pathname});
         if(success) toast.success(message);
         else toast.error(message)
         setLoading(false);

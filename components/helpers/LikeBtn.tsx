@@ -35,7 +35,7 @@ export const LikeBtn = ({postId, likes}: Props) => {
         
         await likePost({postId,pathname}); 
     }
-    console.log(optimisticLikes)
+    
   return (
     <div onClick={addLike}>
         {/* @ts-ignore */}

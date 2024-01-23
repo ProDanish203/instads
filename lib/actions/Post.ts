@@ -5,12 +5,16 @@ import { connectDb } from "../config/db";
 import User from "../models/User";
 import Post from "../models/Post";
 import Comment from "../models/Comment";
-import mongoose from "mongoose";
 
 
 interface PostProps{
     caption?: string;
     fileUrl: string;
+}
+
+interface LikeProps{
+    postId: string;
+    pathname: string;
 }
 
 export const createPost = async ({caption, fileUrl}: PostProps) => {
@@ -59,16 +63,16 @@ export const getPosts = async () => {
             model: 'User',
             select: "username image id"
         })
-        // .populate({
-        //     path: "comments",
-        //     model: Comment,
-        //     options: { limit: 3 }, 
-        //     populate: {
-        //         path: 'author',
-        //         model: User,
-        //         select: "username id image"
-        //     }
-        // })
+        .populate({
+            path: "comments",
+            model: Comment,
+            options: { limit: 3 }, 
+            populate: {
+                path: 'author',
+                model: User,
+                select: "username id image"
+            }
+        })
         .limit(10)
         .sort({createdAt: -1})
         ;
@@ -84,8 +88,7 @@ export const getPosts = async () => {
     }
 }
 
-
-export const deletePost = async (postId: string, pathname: string) => {
+export const deletePost = async ({postId, pathname}: LikeProps) => {
     try{
         const session = await getAuthSession();
         if(!session) 
@@ -115,7 +118,9 @@ export const deletePost = async (postId: string, pathname: string) => {
 }
 
 
-export const likePost = async ({postId, pathname}: {postId: string, pathname: string}) => {
+export const likePost = async ({postId, pathname}
+    : LikeProps
+    ) => {
     try{
         const session = await getAuthSession();
         if(!session) 
