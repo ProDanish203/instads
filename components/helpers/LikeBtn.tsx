@@ -30,16 +30,25 @@ export const LikeBtn = ({postId, likes}: Props) => {
             : [...state, newLike]
     )
     const addLike = async () => {
-        if(!session) return toast.error("Please login to like post")
-        addOptimisticLikes({id: session.user.id})
+        // if(!session) return toast.error("Please login to like post")
+        // addOptimisticLikes({id: session.user.id})
         
-        await likePost({postId,pathname}); 
+        // await likePost({postId,pathname}); 
+        const res = await fetch(`/api/post/${postId}/like`, {
+            method: "POST"
+        })
+        const data = await res.json();
+        console.log(data)
     }
     
   return (
+    // <div onClick={addLike}>
+    //     {/* @ts-ignore */}
+    //     <i className={`${optimisticLikes.includes(session?.user.id) ? "fas fa-heart text-red-500" : "far fa-heart"} cursor-pointer`}></i>
+    // </div>
     <div onClick={addLike}>
         {/* @ts-ignore */}
-        <i className={`${optimisticLikes.includes(session?.user.id) ? "fas fa-heart text-red-500" : "far fa-heart"} cursor-pointer`}></i>
+        <i className={`${likes.includes(session?.user.id) ? "fas fa-heart text-red-500" : "far fa-heart"} cursor-pointer`}></i>
     </div>
   )
 }
